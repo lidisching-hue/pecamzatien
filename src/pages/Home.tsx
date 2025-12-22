@@ -27,98 +27,113 @@ function Home() {
     return () => clearInterval(interval)
   }, [])
 
+  // --- IMÁGENES BANNERS PRINCIPALES ---
   const bannerImages = [
-    'https://via.placeholder.com/1200x400/ef4444/ffffff?text=OFERTAS+NAVIDEÑAS',
-    'https://via.placeholder.com/1200x400/dc2626/ffffff?text=MEGA+DESCUENTOS'
+    'https://maxiahorro.com.pe/wp-content/uploads/2025/12/PORTADA_BannerWeb_Maxi.jpg',
+    'https://maxiahorro.com.pe/wp-content/uploads/2025/12/CONTRA_BannerWeb_Maxi.jpg'
   ]
 
+  // --- IMÁGENES OFERTAS 1 ---
   const ofertas1 = [
-    'https://via.placeholder.com/300x300/fca5a5/000000?text=YAPA+1',
-    'https://via.placeholder.com/300x300/fca5a5/000000?text=YAPA+2',
-    'https://via.placeholder.com/300x300/fca5a5/000000?text=CARRETILLAZO+1',
-    'https://via.placeholder.com/300x300/fca5a5/000000?text=CARRETILLAZO+2'
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/7e30fa76-1f01-4ed8-b2d8-7c490e41f6db___9e99a4b9e54d4a63fb57327cd462dcef.jpg',
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/4aa9637e-2159-4fcd-9531-f9921ce1bd05___c0d3e6cee81136b9ac387245aaaea47a.jpg',
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/cfef34ac-6959-46ec-b5cc-8a6373f2f2d0___b03d662598968f3553f1ed7c2c813cca.jpg',
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/0198c819-7e3a-4166-a5de-62092270cd24___c143c161b42736ebb1ce40db6370b150.jpg'
   ]
 
+  // --- IMÁGENES OFERTAS 2 ---
   const ofertas2 = [
-    'https://via.placeholder.com/300x300/fef3c7/000000?text=INFALTABLE+1',
-    'https://via.placeholder.com/300x300/fef3c7/000000?text=INFALTABLE+2',
-    'https://via.placeholder.com/300x300/fef3c7/000000?text=INFALTABLE+3',
-    'https://via.placeholder.com/300x300/fef3c7/000000?text=INFALTABLE+4'
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/1da13084-8986-4528-906e-0458692d4235___c933a9ebf7a68a3d5454065b54c38c63.jpg',
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/44256cb7-d9c2-49b3-99ac-1f3cbb3a89ec___d0b91b22c26f0ac4355020fa1052f776.jpg',
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/96bf39f1-5c68-4614-93bc-7bcccd9962f0___6cfc0b2f60d8c02fd5e1746fed358926.jpg',
+    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/7d047b63-7348-45c0-b7cf-5cf7369697e9___c56d58540dc287df1bee90c001244bcf.jpg'
   ]
+
+  // Iconos SVG reutilizables
+  const IconoIzquierda = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+    </svg>
+  );
+
+  const IconoDerecha = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+      <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+    </svg>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      {/* Banner principal con carousel */}
-      <section className="relative bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="relative overflow-hidden rounded-lg shadow-lg">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {bannerImages.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`Banner ${idx + 1}`}
-                  className="w-full flex-shrink-0 object-cover h-64 md:h-96"
-                />
-              ))}
-            </div>
+      {/* --- BANNER PRINCIPAL --- */}
+      <section className="relative w-full">
+        <div className="relative overflow-hidden w-full group">
+          <div
+            className="flex transition-transform duration-500 ease-in-out w-full"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {bannerImages.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt={`Banner ${idx + 1}`}
+                className="w-full flex-shrink-0 object-cover h-auto min-h-[200px] md:min-h-[400px]"
+              />
+            ))}
+          </div>
 
-            {/* Controles del carousel */}
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev === 0 ? 1 : 0))}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg"
-            >
-              ◀
-            </button>
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev === 1 ? 0 : 1))}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg"
-            >
-              ▶
-            </button>
+          {/* Botones del Banner */}
+          <button
+            onClick={() => setCurrentSlide((prev) => (prev === 0 ? 1 : 0))}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg transition-all z-20 opacity-0 group-hover:opacity-100"
+          >
+            <IconoIzquierda />
+          </button>
+          <button
+            onClick={() => setCurrentSlide((prev) => (prev === 1 ? 0 : 1))}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg transition-all z-20 opacity-0 group-hover:opacity-100"
+          >
+            <IconoDerecha />
+          </button>
 
-            {/* Indicadores */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {bannerImages.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    currentSlide === idx ? 'bg-red-600 w-8' : 'bg-white/60'
-                  }`}
-                />
-              ))}
-            </div>
+          {/* Indicadores */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            {bannerImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all shadow-sm ${
+                  currentSlide === idx ? 'bg-red-600 w-8' : 'bg-white w-2'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Sección de ofertas increíbles 1 */}
-      <section className="bg-gradient-to-r from-red-50 to-pink-50 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center text-red-600 mb-8">
-            ¡Ofertas increíbles!
-          </h2>
+      {/* --- SECCIÓN OFERTAS INCREÍBLES (MODERNA Y ELEGANTE) --- */}
+      <section className="py-12 px-4 max-w-7xl mx-auto">
+        <h2 className="text-4xl font-bold text-center text-[#1e3a5f] mb-8">
+          ¡Ofertas increíbles!
+        </h2>
 
-          <div className="relative">
-            <div className="overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Tarjeta Izquierda (Ofertas 1) */}
+          <div className="relative bg-[#e8dcd0] rounded-3xl p-6 shadow-lg">
+            <div className="relative overflow-hidden rounded-xl">
               <div
-                className="flex transition-transform duration-500 ease-in-out gap-4"
-                style={{
-                  transform: `translateX(-${ofertas1Slide * 25}%)`
-                }}
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${ofertas1Slide * 100}%)` }}
               >
                 {ofertas1.map((img, idx) => (
-                  <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 px-2">
+                  <div key={idx} className="flex-shrink-0 w-full">
+                    {/* CAMBIO APLICADO: bg-white para llenar espacios, object-contain, altura aumentada */}
                     <img
                       src={img}
-                      alt={`Oferta ${idx + 1}`}
-                      className="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+                      alt={`Oferta Izquierda ${idx + 1}`}
+                      className="w-full h-56 md:h-72 object-contain bg-white rounded-xl shadow-sm"
                     />
                   </div>
                 ))}
@@ -127,39 +142,34 @@ function Home() {
 
             <button
               onClick={() => setOfertas1Slide(Math.max(0, ofertas1Slide - 1))}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-3 shadow-lg z-10"
               disabled={ofertas1Slide === 0}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
             >
-              ◀
+              <IconoIzquierda />
             </button>
             <button
               onClick={() => setOfertas1Slide(Math.min(ofertas1.length - 1, ofertas1Slide + 1))}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-3 shadow-lg z-10"
               disabled={ofertas1Slide >= ofertas1.length - 1}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
             >
-              ▶
+              <IconoDerecha />
             </button>
           </div>
-        </div>
-      </section>
 
-      {/* Sección de ofertas increíbles 2 */}
-      <section className="bg-gradient-to-r from-yellow-50 to-amber-50 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative">
-            <div className="overflow-hidden">
+          {/* Tarjeta Derecha (Ofertas 2) */}
+          <div className="relative bg-[#eef6f9] rounded-3xl p-6 shadow-lg">
+            <div className="relative overflow-hidden rounded-xl">
               <div
-                className="flex transition-transform duration-500 ease-in-out gap-4"
-                style={{
-                  transform: `translateX(-${ofertas2Slide * 25}%)`
-                }}
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${ofertas2Slide * 100}%)` }}
               >
                 {ofertas2.map((img, idx) => (
-                  <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 px-2">
+                  <div key={idx} className="flex-shrink-0 w-full">
+                    {/* CAMBIO APLICADO: bg-white para llenar espacios, object-contain, altura aumentada */}
                     <img
                       src={img}
-                      alt={`Oferta ${idx + 1}`}
-                      className="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+                      alt={`Oferta Derecha ${idx + 1}`}
+                      className="w-full h-56 md:h-72 object-contain bg-white rounded-xl shadow-sm"
                     />
                   </div>
                 ))}
@@ -168,46 +178,53 @@ function Home() {
 
             <button
               onClick={() => setOfertas2Slide(Math.max(0, ofertas2Slide - 1))}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-3 shadow-lg z-10"
               disabled={ofertas2Slide === 0}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
             >
-              ◀
+              <IconoIzquierda />
             </button>
             <button
               onClick={() => setOfertas2Slide(Math.min(ofertas2.length - 1, ofertas2Slide + 1))}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-3 shadow-lg z-10"
               disabled={ofertas2Slide >= ofertas2.length - 1}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
             >
-              ▶
+              <IconoDerecha />
             </button>
           </div>
+
         </div>
       </section>
 
-      {/* Sección de Ofertas Maxiahorro */}
+      {/* Sección de Ofertas Maxiahorro (Productos Grid) */}
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
+          
+          {/* --- HEADER CON BOTONES --- */}
+          <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
             <h2 className="text-3xl font-bold text-gray-800">
               Ofertas PECAMZA
             </h2>
-            <div className="flex gap-4">
+            
+            <div className="flex gap-3">
               <a
                 href="/ofertas"
-                className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-2"
+                className="px-6 py-2.5 bg-red-600 text-white rounded-full font-semibold text-sm hover:bg-red-700 transition-colors shadow-md flex items-center gap-2"
               >
-                Ver más ofertas →
+                Ver más ofertas
               </a>
+              
               <a
                 href="/catalogos"
-                className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-2"
+                className="px-6 py-2.5 border-2 border-red-600 text-red-600 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors flex items-center gap-2"
               >
-                Ir al catálogo →
+                <span>Catálogo</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
               </a>
             </div>
           </div>
 
-          {/* Grid de productos */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productos.slice(0, 8).map((producto) => (
               <ProductCard key={producto.id} producto={producto} />
@@ -222,30 +239,59 @@ function Home() {
         </div>
       </section>
 
-      {/* Banner de WhatsApp */}
-      <section className="bg-gradient-to-r from-green-500 to-green-600 py-8">
+
+
+
+{/* Banner de WhatsApp con QR, Texto y Botón a la derecha */}
+      <section className="bg-gradient-to-r from-green-500 to-green-600 py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-white">
-            <div className="text-6xl">💬</div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold mb-2">
-                Únete a nuestro canal de WhatsApp
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-white">
+            
+            {/* 1. LADO IZQUIERDO: Imagen QR */}
+            <div className="bg-white p-2 rounded-xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 flex-shrink-0">
+              <img 
+                src="https://i.postimg.cc/SRdCH8jk/PCamza.png" 
+                alt="QR Canal WhatsApp" 
+                className="w-32 h-32 md:w-36 md:h-36 object-contain"
+              />
+            </div>
+
+            {/* 2. CENTRO: Texto Informativo (ocupa el espacio disponible) */}
+            <div className="text-center md:text-left flex-1">
+              <h3 className="text-3xl font-bold mb-2">
+                ¡Únete a nuestro Canal!
               </h3>
-              <p className="text-green-100">
-                Recibe ofertas exclusivas y promociones especiales
+              <p className="text-green-100 text-lg leading-relaxed">
+                Escanea el código QR con tu celular o usa el botón para unirte a nuestro canal. <br className="hidden md:block"/>
+                Recibe ofertas exclusivas al instante.
               </p>
             </div>
-            <a
-              href="https://whatsapp.com/channel/00"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-green-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors shadow-lg"
-            >
-              Unirse ahora
-            </a>
+
+            {/* 3. LADO DERECHO: Botón de acción */}
+            <div className="flex-shrink-0">
+              <a
+                href="https://whatsapp.com/channel/0029Vb9q1tJJZg46Segt7c04"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white text-green-600 hover:bg-green-50 font-bold py-4 px-8 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+              >
+                <span className="text-lg">Chatear ahora</span>
+                {/* Flecha animada al hacer hover */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 transition-transform group-hover:translate-x-1">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </div>
+
           </div>
         </div>
       </section>
+
+
+
+
+
+
 
       <Footer />
     </div>

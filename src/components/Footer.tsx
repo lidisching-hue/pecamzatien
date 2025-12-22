@@ -2,31 +2,9 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-white mt-auto">
-      {/* Banner superior del footer - Club del Ahorro */}
-      <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className="flex flex-col items-center gap-3">
-            <div className="bg-white rounded-full p-4 shadow-lg">
-              <span className="text-4xl">🐷</span>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900">
-              ¡Únete a nuestro Club de Ahorro!
-            </h3>
-            <p className="text-gray-800 max-w-xl">
-              Disfruta de ofertas exclusivas y beneficios especiales
-            </p>
-            <a
-              href="https://clubahorro.e/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg"
-            >
-              Conocer más
-            </a>
-          </div>
-        </div>
-      </div>
+   
+
+    <footer>
 
       {/* Contenido principal del footer */}
       <div className="bg-gray-900 py-12">

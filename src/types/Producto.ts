@@ -1,4 +1,5 @@
 export type Producto = {
+  oferta: boolean
   id: string
   nombre: string
   descripcion: string | null
