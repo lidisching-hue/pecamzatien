@@ -1,99 +1,50 @@
 import { supabase } from '../lib/supabase'
-import type { CartItem } from '../types/CartItem'
 
-export interface DatosCliente {
-  nombre: string
-  telefono: string
-  direccion?: string
-}
+// Función para crear el pedido en Supabase
+export const crearPedido = async (userId: string | null, items: any[], datosCliente: any) => {
 
-/* 🧾 Crear pedido */
-export async function crearPedido(
-  userId: string | null,
-  items: CartItem[],
-  datosCliente: DatosCliente
-): Promise<string> {
-
-  const total = items.reduce((acc, item) => {
-    const precio =
-      item.ofertaactiva && item.preciooferta
-        ? item.preciooferta
-        : item.precio
-
-    return acc + precio * item.cantidad
+  // 1. Calculamos el total
+  const montoTotal = items.reduce((acc, item) => {
+    const precio = item.ofertaactiva && item.preciooferta 
+      ? item.preciooferta 
+      : item.precio
+    return acc + (precio * item.cantidad)
   }, 0)
 
+  // 2. Insertamos usando los nombres EXACTOS de tu base de datos (todo minúsculas)
   const { data, error } = await supabase
     .from('pedidos')
-    .insert({
-      user_id: userId,
-      cliente_nombre: datosCliente.nombre,
-      cliente_telefono: datosCliente.telefono,
-      cliente_direccion: datosCliente.direccion || null,
-      total,
-      estado: 'Pendiente',
-      enviado_whatsapp: false,
-    })
+    .insert([
+      {
+        user_id: userId,                      
+        nombre_cliente: datosCliente.nombre,  // CORREGIDO: coincide con tu columna 'nombre_cliente'
+        telefono: datosCliente.telefono,      // CORREGIDO: coincide con tu columna 'telefono'
+        direccion: datosCliente.direccion,    // CORREGIDO: Aquí estaba el error, antes decía 'cliente_direccion'
+        productos: items,                     
+        total: montoTotal,                    
+        estado: 'pendiente'                   
+      }
+    ])
     .select()
     .single()
 
-  if (error || !data) {
-    console.error(error)
-    throw new Error('Error al crear pedido')
-  }
-
-  // 📦 Detalle del pedido
-  const detalles = items.map(item => ({
-    pedido_id: data.id,
-    producto_id: item.id,
-    nombre: item.nombre,
-    precio:
-      item.ofertaactiva && item.preciooferta
-        ? item.preciooferta
-        : item.precio,
-    cantidad: item.cantidad,
-  }))
-
-  const { error: detalleError } = await supabase
-    .from('pedido_detalles')
-    .insert(detalles)
-
-  if (detalleError) {
-    console.error(detalleError)
-    throw new Error('Error al guardar detalle del pedido')
+  if (error) {
+    console.error("Error detallado Supabase:", error.message)
+    throw error
   }
 
   return data.id
 }
 
-/* 📲 Enviar pedido por WhatsApp */
-export async function enviarPedidoWhatsApp(
-  pedidoId: string,
-  telefonoTienda: string,
-  mensaje: string
-) {
-  const { data, error } = await supabase
-    .from('pedidos')
-    .select('enviado_whatsapp')
-    .eq('id', pedidoId)
-    .single()
 
-  if (error || !data) {
-    throw new Error('Pedido no encontrado')
-  }
-
-  if (data.enviado_whatsapp) {
-    return
-  }
-
-  await supabase
-    .from('pedidos')
-    .update({
-      enviado_whatsapp: true,
-      estado: 'Mensaje enviado',
-    })
-    .eq('id', pedidoId)
-
-  const url = `https://wa.me/${telefonoTienda}?text=${encodeURIComponent(mensaje)}`
-  window.open(url, '_blank')
+    export const enviarPedidoWhatsApp = async (id: string, telefonoTienda: string, mensaje: string) => {
+    // Usamos api.whatsapp.com que procesa mejor los símbolos que wa.me
+    const url = `https://api.whatsapp.com/send?phone=${telefonoTienda}&text=${encodeURIComponent(mensaje)}`
+    
+    // Abrir en nueva pestaña
+    window.open(url, '_blank')
+    
+    // Marcar como enviado en base de datos
+    await supabase.from('pedidos').update({ enviado_whatsapp: true }).eq('id', id)
 }
+

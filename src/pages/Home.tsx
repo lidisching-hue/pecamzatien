@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-// 1. IMPORTAMOS HELMET
 import { Helmet } from 'react-helmet-async'
 import type { Producto } from '../types/Producto'
 import ProductCard from '../components/ProductCard'
@@ -10,11 +9,7 @@ import Footer from '../components/Footer'
 function Home() {
   const [productos, setProductos] = useState<Producto[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
-  
-  // Estado para el carrusel de imágenes (Izquierda)
   const [ofertas1Slide, setOfertas1Slide] = useState(0)
-  
-  // Estado para el carrusel de videos (Derecha)
   const [ofertas2Slide, setOfertas2Slide] = useState(0)
 
   useEffect(() => {
@@ -25,7 +20,6 @@ function Home() {
     cargar()
   }, [])
 
-  // Carousel automático para banner principal
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === 1 ? 0 : 1))
@@ -33,13 +27,11 @@ function Home() {
     return () => clearInterval(interval)
   }, [])
 
-  // --- IMÁGENES BANNERS PRINCIPALES ---
   const bannerImages = [
     'https://maxiahorro.com.pe/wp-content/uploads/2025/12/PORTADA_BannerWeb_Maxi.jpg',
     'https://maxiahorro.com.pe/wp-content/uploads/2025/12/CONTRA_BannerWeb_Maxi.jpg'
   ]
 
-  // --- IMÁGENES OFERTAS 1 (Lado Izquierdo) ---
   const ofertas1 = [
     'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/7e30fa76-1f01-4ed8-b2d8-7c490e41f6db___9e99a4b9e54d4a63fb57327cd462dcef.jpg',
     'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/4aa9637e-2159-4fcd-9531-f9921ce1bd05___c0d3e6cee81136b9ac387245aaaea47a.jpg',
@@ -47,13 +39,12 @@ function Home() {
     'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/0198c819-7e3a-4166-a5de-62092270cd24___c143c161b42736ebb1ce40db6370b150.jpg'
   ]
 
-  // --- VIDEOS OFERTAS 2 (Lado Derecho) ---
+  // CORRECCIÓN 1: Agregamos &controls=1 para asegurar que salgan los botones
   const videosOfertas = [
-    "https://player.vimeo.com/video/1148787918?autoplay=1&loop=1&autopause=0&muted=0&title=0&byline=0&portrait=0&badge=0",
-    "https://player.vimeo.com/video/1148787925?autoplay=1&loop=1&autopause=0&muted=0&title=0&byline=0&portrait=0&badge=0"
+    "https://player.vimeo.com/video/1148787918?autoplay=1&loop=1&autopause=0&muted=1&controls=1&title=0&byline=0&portrait=0",
+    "https://player.vimeo.com/video/1148787925?autoplay=1&loop=1&autopause=0&muted=1&controls=1&title=0&byline=0&portrait=0"
   ]
 
-  // Iconos SVG reutilizables
   const IconoIzquierda = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -69,21 +60,12 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       
-      {/* 2. AQUÍ ESTÁ LA CONFIGURACIÓN SEO PARA GOOGLE */}
       <Helmet>
-        {/* Título que sale en la pestaña del navegador */}
         <title>PCamza | Abarrotes Mayoristas</title>
-        
-        {/* Descripción que sale en Google debajo del enlace azul */}
         <meta name="description" content="Ahorra comprando en Pcamza. Las mejores ofertas en abarrotes, limpieza y productos de primera necesidad. Venta por mayor y menor en Trujillo, Perú." />
-        
-        {/* Palabras clave para buscadores */}
         <meta name="keywords" content="pecamza, abarrotes en Piura - Tambogrande - Las Lomas, supermercado mayorista, ofertas arroz, azucar, aceite, limpieza, trujillo, mercado mayorista" />
-        
-        {/* --- Configuración para cuando compartas el link en WhatsApp/Facebook --- */}
         <meta property="og:title" content="Pecamza | Donde comprar es ahorrar" />
         <meta property="og:description" content="Descubre nuestras ofertas increíbles en abarrotes por mayor y menor en Piura - Tambogrande - Las Lomas." />
-        {/* Usamos una de tus imágenes del banner como portada del enlace */}
         <meta property="og:image" content="https://i.postimg.cc/Rh0CgnHt/PCAMZALOGO.jpg" />
         <meta property="og:type" content="website" />
       </Helmet>
@@ -120,7 +102,6 @@ function Home() {
             <IconoDerecha />
           </button>
 
-          {/* Indicadores */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             {bannerImages.map((_, idx) => (
               <button
@@ -141,7 +122,6 @@ function Home() {
           ¡Ofertas increíbles!
         </h2>
 
-        {/* Grid ajustado para mayor altura y sin espacios internos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[450px] md:h-[500px]">
           
           {/* 1. IZQUIERDA: Carrusel de Imágenes */}
@@ -163,7 +143,6 @@ function Home() {
               </div>
             </div>
 
-            {/* Flechas Izquierda */}
             <button
               onClick={() => setOfertas1Slide(Math.max(0, ofertas1Slide - 1))}
               disabled={ofertas1Slide === 0}
@@ -183,12 +162,12 @@ function Home() {
           {/* 2. DERECHA: Video Player */}
           <div className="relative bg-gray-50 rounded-3xl h-full overflow-hidden group">
              
-             {/* Contenedor del video ocupando el 100% */}
              <div className="w-full h-full relative">
                <iframe
                  key={ofertas2Slide} 
                  src={videosOfertas[ofertas2Slide]}
-                 className="w-full h-full transform scale-[1.25]" 
+                 // CORRECCIÓN 2: Quité scale-[1.25] para que se vean los controles abajo
+                 className="w-full h-full" 
                  frameBorder="0" 
                  allow="autoplay; fullscreen; picture-in-picture" 
                  allowFullScreen
@@ -197,7 +176,6 @@ function Home() {
                <div className="absolute inset-0 pointer-events-none border border-transparent"></div>
              </div>
 
-             {/* Flechas Navegación Derecha */}
              <button
               onClick={() => setOfertas2Slide(Math.max(0, ofertas2Slide - 1))}
               disabled={ofertas2Slide === 0}
@@ -220,24 +198,15 @@ function Home() {
       {/* Sección de Ofertas Maxiahorro */}
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          
           <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
             <h2 className="text-3xl font-bold text-gray-800">
               Ofertas PECAMZA
             </h2>
-            
             <div className="flex gap-3">
-              <a
-                href="/ofertas"
-                className="px-6 py-2.5 bg-red-600 text-white rounded-full font-semibold text-sm hover:bg-red-700 transition-colors shadow-md flex items-center gap-2"
-              >
+              <a href="/ofertas" className="px-6 py-2.5 bg-red-600 text-white rounded-full font-semibold text-sm hover:bg-red-700 transition-colors shadow-md flex items-center gap-2">
                 Ver más ofertas
               </a>
-              
-              <a
-                href="/catalogos"
-                className="px-6 py-2.5 border-2 border-red-600 text-red-600 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors flex items-center gap-2"
-              >
+              <a href="/catalogos" className="px-6 py-2.5 border-2 border-red-600 text-red-600 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors flex items-center gap-2">
                 <span>Catálogo</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -245,13 +214,11 @@ function Home() {
               </a>
             </div>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productos.slice(0, 8).map((producto) => (
               <ProductCard key={producto.id} producto={producto} />
             ))}
           </div>
-
           {productos.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">Cargando productos...</p>
@@ -264,39 +231,24 @@ function Home() {
       <section className="bg-gradient-to-r from-green-500 to-green-600 py-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-white">
-            
             <div className="bg-white p-2 rounded-xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 flex-shrink-0">
-              <img 
-                src="https://i.postimg.cc/SRdCH8jk/PCamza.png" 
-                alt="QR Canal WhatsApp" 
-                className="w-32 h-32 md:w-36 md:h-36 object-contain"
-              />
+              <img src="https://i.postimg.cc/SRdCH8jk/PCamza.png" alt="QR Canal WhatsApp" className="w-32 h-32 md:w-36 md:h-36 object-contain"/>
             </div>
-
             <div className="text-center md:text-left flex-1">
-              <h3 className="text-3xl font-bold mb-2">
-                ¡Únete a nuestro Canal!
-              </h3>
+              <h3 className="text-3xl font-bold mb-2">¡Únete a nuestro Canal!</h3>
               <p className="text-green-100 text-lg leading-relaxed">
                 Escanea el código QR con tu celular o usa el botón para unirte a nuestro canal. <br className="hidden md:block"/>
                 Recibe ofertas exclusivas al instante.
               </p>
             </div>
-
             <div className="flex-shrink-0">
-              <a
-                href="https://whatsapp.com/channel/0029Vb9q1tJJZg46Segt7c04"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-white text-green-600 hover:bg-green-50 font-bold py-4 px-8 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
-              >
+              <a href="https://whatsapp.com/channel/0029Vb9q1tJJZg46Segt7c04" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-white text-green-600 hover:bg-green-50 font-bold py-4 px-8 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 group">
                 <span className="text-lg">Chatear ahora</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 transition-transform group-hover:translate-x-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </a>
             </div>
-
           </div>
         </div>
       </section>
