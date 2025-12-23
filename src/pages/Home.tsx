@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+// 1. IMPORTAMOS HELMET
+import { Helmet } from 'react-helmet-async'
 import type { Producto } from '../types/Producto'
 import ProductCard from '../components/ProductCard'
 import { obtenerProductos } from '../services/productos.service'
@@ -49,7 +51,6 @@ function Home() {
   const videosOfertas = [
     "https://player.vimeo.com/video/1148787918?autoplay=1&loop=1&autopause=0&muted=0&title=0&byline=0&portrait=0&badge=0",
     "https://player.vimeo.com/video/1148787925?autoplay=1&loop=1&autopause=0&muted=0&title=0&byline=0&portrait=0&badge=0"
-    
   ]
 
   // Iconos SVG reutilizables
@@ -66,8 +67,27 @@ function Home() {
   );
 
   return (
-    // AQUÍ ESTÁ EL COLOR FONDO GENERAL: bg-gray-50
     <div className="min-h-screen bg-gray-50">
+      
+      {/* 2. AQUÍ ESTÁ LA CONFIGURACIÓN SEO PARA GOOGLE */}
+      <Helmet>
+        {/* Título que sale en la pestaña del navegador */}
+        <title>Pecamza | Abarrotes Mayoristas</title>
+        
+        {/* Descripción que sale en Google debajo del enlace azul */}
+        <meta name="description" content="Ahorra comprando en Pecamza. Las mejores ofertas en abarrotes, limpieza y productos de primera necesidad. Venta por mayor y menor en Trujillo, Perú." />
+        
+        {/* Palabras clave para buscadores */}
+        <meta name="keywords" content="pecamza, abarrotes en Piura - Tambogrande - Las Lomas, supermercado mayorista, ofertas arroz, azucar, aceite, limpieza, trujillo, mercado mayorista" />
+        
+        {/* --- Configuración para cuando compartas el link en WhatsApp/Facebook --- */}
+        <meta property="og:title" content="Pecamza | Donde comprar es ahorrar" />
+        <meta property="og:description" content="Descubre nuestras ofertas increíbles en abarrotes por mayor y menor en Piura - Tambogrande - Las Lomas." />
+        {/* Usamos una de tus imágenes del banner como portada del enlace */}
+        <meta property="og:image" content="https://i.postimg.cc/Rh0CgnHt/PCAMZALOGO.jpg" />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <Header />
 
       {/* --- BANNER PRINCIPAL --- */}
@@ -124,7 +144,7 @@ function Home() {
         {/* Grid ajustado para mayor altura y sin espacios internos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[450px] md:h-[500px]">
           
-          {/* 1. IZQUIERDA: Carrusel de Imágenes (CON ESTILO DE TARJETA Y BORDES) */}
+          {/* 1. IZQUIERDA: Carrusel de Imágenes */}
           <div className="relative bg-[#e8dcd0] rounded-3xl overflow-hidden shadow-xl h-full border-4 border-[#e8dcd0]">
             <div className="relative w-full h-full bg-white">
               <div
@@ -160,30 +180,24 @@ function Home() {
             </button>
           </div>
 
-          {/* 2. DERECHA: Video Player (SIN BORDES, MISMO FONDO) */}
-          {/* CAMBIO AQUÍ: bg-gray-50 para igualar el fondo de la página */}
+          {/* 2. DERECHA: Video Player */}
           <div className="relative bg-gray-50 rounded-3xl h-full overflow-hidden group">
              
              {/* Contenedor del video ocupando el 100% */}
              <div className="w-full h-full relative">
-                
-                {/* Scale 1.25 para asegurar que no haya bordes negros internos */}
-                <iframe
-                  key={ofertas2Slide} 
-                  src={videosOfertas[ofertas2Slide]}
-                  className="w-full h-full transform scale-[1.25]" 
-                  frameBorder="0" 
-                  allow="autoplay; fullscreen; picture-in-picture" 
-                  allowFullScreen
-                  title="Video Oferta"
-                ></iframe>
-                
-                {/* Capa invisible */}
-                <div className="absolute inset-0 pointer-events-none border border-transparent"></div>
-
+               <iframe
+                 key={ofertas2Slide} 
+                 src={videosOfertas[ofertas2Slide]}
+                 className="w-full h-full transform scale-[1.25]" 
+                 frameBorder="0" 
+                 allow="autoplay; fullscreen; picture-in-picture" 
+                 allowFullScreen
+                 title="Video Oferta"
+               ></iframe>
+               <div className="absolute inset-0 pointer-events-none border border-transparent"></div>
              </div>
 
-             {/* Flechas Navegación Derecha (Sobre el video) */}
+             {/* Flechas Navegación Derecha */}
              <button
               onClick={() => setOfertas2Slide(Math.max(0, ofertas2Slide - 1))}
               disabled={ofertas2Slide === 0}
