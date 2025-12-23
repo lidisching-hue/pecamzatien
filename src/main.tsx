@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-// 1. Importamos HelmetProvider
+import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { CartProvider } from './context/CartContext'
 import App from './App'
@@ -8,11 +8,12 @@ import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* 2. Envolvemos todo aquí para activar el SEO en toda la app */}
-    <HelmetProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </HelmetProvider>
+    <BrowserRouter>
+      <HelmetProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </HelmetProvider>
+    </BrowserRouter>
   </StrictMode>
 )
