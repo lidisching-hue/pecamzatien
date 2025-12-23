@@ -1,9 +1,8 @@
 import { supabase } from '../lib/supabase'
 
-// Función para crear el pedido en Supabase
+// 1. Función para guardar el pedido en la Base de Datos
 export const crearPedido = async (userId: string | null, items: any[], datosCliente: any) => {
 
-  // 1. Calculamos el total
   const montoTotal = items.reduce((acc, item) => {
     const precio = item.ofertaactiva && item.preciooferta 
       ? item.preciooferta 
@@ -11,15 +10,15 @@ export const crearPedido = async (userId: string | null, items: any[], datosClie
     return acc + (precio * item.cantidad)
   }, 0)
 
-  // 2. Insertamos usando los nombres EXACTOS de tu base de datos (todo minúsculas)
+  // Mapeo exacto a tus columnas (todo minúsculas)
   const { data, error } = await supabase
     .from('pedidos')
     .insert([
       {
         user_id: userId,                      
-        nombre_cliente: datosCliente.nombre,  // CORREGIDO: coincide con tu columna 'nombre_cliente'
-        telefono: datosCliente.telefono,      // CORREGIDO: coincide con tu columna 'telefono'
-        direccion: datosCliente.direccion,    // CORREGIDO: Aquí estaba el error, antes decía 'cliente_direccion'
+        nombre_cliente: datosCliente.nombre,
+        telefono: datosCliente.telefono,
+        direccion: datosCliente.direccion,
         productos: items,                     
         total: montoTotal,                    
         estado: 'pendiente'                   
@@ -29,22 +28,26 @@ export const crearPedido = async (userId: string | null, items: any[], datosClie
     .single()
 
   if (error) {
-    console.error("Error detallado Supabase:", error.message)
+    console.error("Error Supabase:", error.message)
     throw error
   }
 
   return data.id
 }
 
-
-    export const enviarPedidoWhatsApp = async (id: string, telefonoTienda: string, mensaje: string) => {
-    // Usamos api.whatsapp.com que procesa mejor los símbolos que wa.me
-    const url = `https://api.whatsapp.com/send?phone=${telefonoTienda}&text=${encodeURIComponent(mensaje)}`
+// 2. Función para abrir WhatsApp
+export const enviarPedidoWhatsApp = async (id: string, telefonoTienda: string, mensaje: string) => {
+    // Usamos wa.me que es el estándar más compatible
+    // encodeURIComponent es CLAVE para que no se rompa el mensaje con espacios o tildes
+    const url = `https://wa.me/${telefonoTienda}?text=${encodeURIComponent(mensaje)}`
     
-    // Abrir en nueva pestaña
+    // Abrimos en una nueva pestaña
     window.open(url, '_blank')
     
-    // Marcar como enviado en base de datos
-    await supabase.from('pedidos').update({ enviado_whatsapp: true }).eq('id', id)
+    // Actualizamos el estado en la base de datos (opcional, no bloquea el flujo si falla)
+    try {
+        await supabase.from('pedidos').update({ enviado_whatsapp: true }).eq('id', id)
+    } catch (err) {
+        console.log("No se pudo actualizar el flag de whatsapp, pero el mensaje se envió.")
+    }
 }
-
