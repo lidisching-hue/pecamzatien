@@ -8,7 +8,7 @@ import Footer from '../components/Footer'
 
 function Productos() {
   const [productos, setProductos] = useState<Producto[]>([])
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [] = useState(0)
 
   useEffect(() => {
     const cargar = async () => {
@@ -18,82 +18,13 @@ function Productos() {
     cargar()
   }, [])
 
-  // Carousel automático para banner principal
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === 1 ? 0 : 1))
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
 
-  // --- IMÁGENES BANNERS PRINCIPALES ---
-  const bannerImages = [
-    'https://scontent.ftru5-1.fna.fbcdn.net/v/t39.30808-6/596745914_122104858509149898_5543645734679460645_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFSyPuYU_EsQrc6P8QUrIweyCEayZcXpLvIIRrJlxekuxUn3OZN58D6Niz-XnprEZDHh8JOcyMhqNlhylcFAIAb&_nc_ohc=7ZlR3IT5OxwQ7kNvwE04CQL&_nc_oc=AdmtlJVlTnDt1cyYKGxeH4RMHr6xMYVnxuII5gJ850Lvm1xKVIzcu9BXXGYI6oObMfs&_nc_zt=23&_nc_ht=scontent.ftru5-1.fna&_nc_gid=egASXkgyARyqpRxg9rGegw&oh=00_Afm74cR3r5aEu2HeBTddvN7OKg0968nIMTT3z616MJw8XQ&oe=694F91D4',
-    'https://maxiahorro.com.pe/wp-content/uploads/2025/12/CONTRA_BannerWeb_Maxi.jpg'
-  ]
-
-  // Iconos SVG reutilizables para el Banner
-  const IconoIzquierda = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-    </svg>
-  );
-
-  const IconoDerecha = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-    </svg>
-  );
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       <Header />
 
-      {/* --- BANNER PRINCIPAL --- */}
-      <section className="relative w-full">
-        <div className="relative overflow-hidden w-full group">
-          <div
-            className="flex transition-transform duration-500 ease-in-out w-full"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {bannerImages.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt={`Banner ${idx + 1}`}
-                className="w-full flex-shrink-0 object-cover h-auto min-h-[200px] md:min-h-[400px]"
-              />
-            ))}
-          </div>
-
-          {/* Botones del Banner */}
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev === 0 ? 1 : 0))}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg transition-all z-20 opacity-0 group-hover:opacity-100"
-          >
-            <IconoIzquierda />
-          </button>
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev === 1 ? 0 : 1))}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg transition-all z-20 opacity-0 group-hover:opacity-100"
-          >
-            <IconoDerecha />
-          </button>
-
-          {/* Indicadores */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {bannerImages.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all shadow-sm ${
-                  currentSlide === idx ? 'bg-red-600 w-8' : 'bg-white w-2'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* --- SECCIÓN PRODUCTOS MERKAT / PECAMZA --- */}
       <section className="bg-white py-12 min-h-[500px]">
