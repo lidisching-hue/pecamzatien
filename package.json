@@ -26,9 +26,9 @@
     "typescript": "^5.4.5",
     "vite": "^5.4.0"
   },
-  
+
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   }
 }
 
