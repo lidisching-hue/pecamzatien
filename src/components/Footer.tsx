@@ -145,7 +145,7 @@ function Footer() {
 
       {/* Botón flotante de WhatsApp Moderno */}
       <a
-        href="https://api.whatsapp.com/send?phone=+51994166419&text=Hola,%20necesito%20información"
+        href="https://api.whatsapp.com/send?phone=+51994166419&text=Hola,%20necesito%20información%20sobre%20sus%20productos."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl transition-all hover:scale-110 z-50 flex items-center justify-center group animate-bounce-slow"
