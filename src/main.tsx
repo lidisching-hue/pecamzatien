@@ -8,12 +8,12 @@ import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <HelmetProvider>
-        <CartProvider>
+    <HelmetProvider>
+      <CartProvider>
+        <BrowserRouter>
           <App />
-        </CartProvider>
-      </HelmetProvider>
-    </BrowserRouter>
+        </BrowserRouter>
+      </CartProvider>
+    </HelmetProvider>
   </StrictMode>
 )
