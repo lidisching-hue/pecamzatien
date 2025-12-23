@@ -72,10 +72,10 @@ function Home() {
       {/* 2. AQUÍ ESTÁ LA CONFIGURACIÓN SEO PARA GOOGLE */}
       <Helmet>
         {/* Título que sale en la pestaña del navegador */}
-        <title>Pecamza | Abarrotes Mayoristas</title>
+        <title>PCamza | Abarrotes Mayoristas</title>
         
         {/* Descripción que sale en Google debajo del enlace azul */}
-        <meta name="description" content="Ahorra comprando en Pecamza. Las mejores ofertas en abarrotes, limpieza y productos de primera necesidad. Venta por mayor y menor en Trujillo, Perú." />
+        <meta name="description" content="Ahorra comprando en Pcamza. Las mejores ofertas en abarrotes, limpieza y productos de primera necesidad. Venta por mayor y menor en Trujillo, Perú." />
         
         {/* Palabras clave para buscadores */}
         <meta name="keywords" content="pecamza, abarrotes en Piura - Tambogrande - Las Lomas, supermercado mayorista, ofertas arroz, azucar, aceite, limpieza, trujillo, mercado mayorista" />
