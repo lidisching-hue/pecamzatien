@@ -8,7 +8,11 @@ import Footer from '../components/Footer'
 function Home() {
   const [productos, setProductos] = useState<Producto[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
+  
+  // Estado para el carrusel de imágenes (Izquierda)
   const [ofertas1Slide, setOfertas1Slide] = useState(0)
+  
+  // Estado para el carrusel de videos (Derecha)
   const [ofertas2Slide, setOfertas2Slide] = useState(0)
 
   useEffect(() => {
@@ -33,7 +37,7 @@ function Home() {
     'https://maxiahorro.com.pe/wp-content/uploads/2025/12/CONTRA_BannerWeb_Maxi.jpg'
   ]
 
-  // --- IMÁGENES OFERTAS 1 ---
+  // --- IMÁGENES OFERTAS 1 (Lado Izquierdo) ---
   const ofertas1 = [
     'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/7e30fa76-1f01-4ed8-b2d8-7c490e41f6db___9e99a4b9e54d4a63fb57327cd462dcef.jpg',
     'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/4aa9637e-2159-4fcd-9531-f9921ce1bd05___c0d3e6cee81136b9ac387245aaaea47a.jpg',
@@ -41,12 +45,11 @@ function Home() {
     'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/0198c819-7e3a-4166-a5de-62092270cd24___c143c161b42736ebb1ce40db6370b150.jpg'
   ]
 
-  // --- IMÁGENES OFERTAS 2 ---
-  const ofertas2 = [
-    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/1da13084-8986-4528-906e-0458692d4235___c933a9ebf7a68a3d5454065b54c38c63.jpg',
-    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/44256cb7-d9c2-49b3-99ac-1f3cbb3a89ec___d0b91b22c26f0ac4355020fa1052f776.jpg',
-    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/96bf39f1-5c68-4614-93bc-7bcccd9962f0___6cfc0b2f60d8c02fd5e1746fed358926.jpg',
-    'https://wongio.vtexassets.com/assets/vtex.file-manager-graphql/images/7d047b63-7348-45c0-b7cf-5cf7369697e9___c56d58540dc287df1bee90c001244bcf.jpg'
+  // --- VIDEOS OFERTAS 2 (Lado Derecho) ---
+  const videosOfertas = [
+    "https://player.vimeo.com/video/1148787918?autoplay=1&loop=1&autopause=0&muted=0&title=0&byline=0&portrait=0&badge=0",
+    "https://player.vimeo.com/video/1148787925?autoplay=1&loop=1&autopause=0&muted=0&title=0&byline=0&portrait=0&badge=0"
+    
   ]
 
   // Iconos SVG reutilizables
@@ -63,6 +66,7 @@ function Home() {
   );
 
   return (
+    // AQUÍ ESTÁ EL COLOR FONDO GENERAL: bg-gray-50
     <div className="min-h-screen bg-gray-50">
       <Header />
 
@@ -83,7 +87,6 @@ function Home() {
             ))}
           </div>
 
-          {/* Botones del Banner */}
           <button
             onClick={() => setCurrentSlide((prev) => (prev === 0 ? 1 : 0))}
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg transition-all z-20 opacity-0 group-hover:opacity-100"
@@ -112,81 +115,86 @@ function Home() {
         </div>
       </section>
 
-      {/* --- SECCIÓN OFERTAS INCREÍBLES (MODERNA Y ELEGANTE) --- */}
+      {/* --- SECCIÓN OFERTAS INCREÍBLES --- */}
       <section className="py-12 px-4 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-center text-[#1e3a5f] mb-8">
           ¡Ofertas increíbles!
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Grid ajustado para mayor altura y sin espacios internos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[450px] md:h-[500px]">
           
-          {/* Tarjeta Izquierda (Ofertas 1) */}
-          <div className="relative bg-[#e8dcd0] rounded-3xl p-6 shadow-lg">
-            <div className="relative overflow-hidden rounded-xl">
+          {/* 1. IZQUIERDA: Carrusel de Imágenes (CON ESTILO DE TARJETA Y BORDES) */}
+          <div className="relative bg-[#e8dcd0] rounded-3xl overflow-hidden shadow-xl h-full border-4 border-[#e8dcd0]">
+            <div className="relative w-full h-full bg-white">
               <div
-                className="flex transition-transform duration-500 ease-in-out"
+                className="flex transition-transform duration-500 ease-in-out h-full"
                 style={{ transform: `translateX(-${ofertas1Slide * 100}%)` }}
               >
                 {ofertas1.map((img, idx) => (
-                  <div key={idx} className="flex-shrink-0 w-full">
-                    {/* CAMBIO APLICADO: bg-white para llenar espacios, object-contain, altura aumentada */}
+                  <div key={idx} className="flex-shrink-0 w-full h-full relative">
                     <img
                       src={img}
                       alt={`Oferta Izquierda ${idx + 1}`}
-                      className="w-full h-56 md:h-72 object-contain bg-white rounded-xl shadow-sm"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   </div>
                 ))}
               </div>
             </div>
 
+            {/* Flechas Izquierda */}
             <button
               onClick={() => setOfertas1Slide(Math.max(0, ofertas1Slide - 1))}
               disabled={ofertas1Slide === 0}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 transition-transform hover:scale-110"
             >
               <IconoIzquierda />
             </button>
             <button
               onClick={() => setOfertas1Slide(Math.min(ofertas1.length - 1, ofertas1Slide + 1))}
               disabled={ofertas1Slide >= ofertas1.length - 1}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 transition-transform hover:scale-110"
             >
               <IconoDerecha />
             </button>
           </div>
 
-          {/* Tarjeta Derecha (Ofertas 2) */}
-          <div className="relative bg-[#eef6f9] rounded-3xl p-6 shadow-lg">
-            <div className="relative overflow-hidden rounded-xl">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${ofertas2Slide * 100}%)` }}
-              >
-                {ofertas2.map((img, idx) => (
-                  <div key={idx} className="flex-shrink-0 w-full">
-                    {/* CAMBIO APLICADO: bg-white para llenar espacios, object-contain, altura aumentada */}
-                    <img
-                      src={img}
-                      alt={`Oferta Derecha ${idx + 1}`}
-                      className="w-full h-56 md:h-72 object-contain bg-white rounded-xl shadow-sm"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* 2. DERECHA: Video Player (SIN BORDES, MISMO FONDO) */}
+          {/* CAMBIO AQUÍ: bg-gray-50 para igualar el fondo de la página */}
+          <div className="relative bg-gray-50 rounded-3xl h-full overflow-hidden group">
+             
+             {/* Contenedor del video ocupando el 100% */}
+             <div className="w-full h-full relative">
+                
+                {/* Scale 1.25 para asegurar que no haya bordes negros internos */}
+                <iframe
+                  key={ofertas2Slide} 
+                  src={videosOfertas[ofertas2Slide]}
+                  className="w-full h-full transform scale-[1.25]" 
+                  frameBorder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture" 
+                  allowFullScreen
+                  title="Video Oferta"
+                ></iframe>
+                
+                {/* Capa invisible */}
+                <div className="absolute inset-0 pointer-events-none border border-transparent"></div>
 
-            <button
+             </div>
+
+             {/* Flechas Navegación Derecha (Sobre el video) */}
+             <button
               onClick={() => setOfertas2Slide(Math.max(0, ofertas2Slide - 1))}
               disabled={ofertas2Slide === 0}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-red-600/90 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-20 disabled:opacity-0 transition-all hover:scale-110 backdrop-blur-sm"
             >
               <IconoIzquierda />
             </button>
             <button
-              onClick={() => setOfertas2Slide(Math.min(ofertas2.length - 1, ofertas2Slide + 1))}
-              disabled={ofertas2Slide >= ofertas2.length - 1}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-10 disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-110"
+              onClick={() => setOfertas2Slide(Math.min(videosOfertas.length - 1, ofertas2Slide + 1))}
+              disabled={ofertas2Slide >= videosOfertas.length - 1}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-red-600/90 hover:bg-red-700 text-white rounded-full p-3 shadow-lg z-20 disabled:opacity-0 transition-all hover:scale-110 backdrop-blur-sm"
             >
               <IconoDerecha />
             </button>
@@ -195,11 +203,10 @@ function Home() {
         </div>
       </section>
 
-      {/* Sección de Ofertas Maxiahorro (Productos Grid) */}
+      {/* Sección de Ofertas Maxiahorro */}
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4">
           
-          {/* --- HEADER CON BOTONES --- */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
             <h2 className="text-3xl font-bold text-gray-800">
               Ofertas PECAMZA
@@ -239,15 +246,11 @@ function Home() {
         </div>
       </section>
 
-
-
-
-{/* Banner de WhatsApp con QR, Texto y Botón a la derecha */}
+      {/* Banner de WhatsApp */}
       <section className="bg-gradient-to-r from-green-500 to-green-600 py-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-white">
             
-            {/* 1. LADO IZQUIERDO: Imagen QR */}
             <div className="bg-white p-2 rounded-xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 flex-shrink-0">
               <img 
                 src="https://i.postimg.cc/SRdCH8jk/PCamza.png" 
@@ -256,7 +259,6 @@ function Home() {
               />
             </div>
 
-            {/* 2. CENTRO: Texto Informativo (ocupa el espacio disponible) */}
             <div className="text-center md:text-left flex-1">
               <h3 className="text-3xl font-bold mb-2">
                 ¡Únete a nuestro Canal!
@@ -267,7 +269,6 @@ function Home() {
               </p>
             </div>
 
-            {/* 3. LADO DERECHO: Botón de acción */}
             <div className="flex-shrink-0">
               <a
                 href="https://whatsapp.com/channel/0029Vb9q1tJJZg46Segt7c04"
@@ -276,7 +277,6 @@ function Home() {
                 className="flex items-center gap-3 bg-white text-green-600 hover:bg-green-50 font-bold py-4 px-8 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
               >
                 <span className="text-lg">Chatear ahora</span>
-                {/* Flecha animada al hacer hover */}
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 transition-transform group-hover:translate-x-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
@@ -286,12 +286,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-
-
-
-
-
 
       <Footer />
     </div>
